@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync } from 'fs';
+import { PostMetaData } from '../../../models/posts.model';
 import { getYamlMetaData, parseToAST } from '../__utils/remark';
 
 const POST_DIRECTORY = '__posts';
@@ -6,8 +7,10 @@ const POST_DIRECTORY = '__posts';
 /**
  *  모든 포스트의 메타데이터를 가져옵니다
  */
-function getAllPostMetaData() {
-  return getAllPosts().map(getYamlMetaData);
+function getAllPostMetaData(): PostMetaData[] {
+  return getAllPosts()
+    .map(getYamlMetaData)
+    .filter((meta): meta is PostMetaData => meta !== null);
 }
 
 /**
