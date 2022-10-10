@@ -45,8 +45,14 @@ function getPost(slug: string) {
   return post;
 }
 
+function getAllSlugs() {
+  const postMetaDatas = getAllPostMetaData();
+  return postMetaDatas.map((meta) => meta.slug);
+}
+
 const postService = {
   getAllPostMetaData,
   getPost,
+  getAllSlugs,
 };
 export default postService;
