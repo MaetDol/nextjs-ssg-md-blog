@@ -33,16 +33,17 @@ function getAllPosts() {
 }
 
 /**
- * slug 가 일치하는 포스트를 가져옵니다
+ * slug 가 일치하는 포스트를 마크다운 문자열로 가져옵니다
  */
 function getPost(slug: string) {
-  const posts = getAllPosts().map((postAst) => ({
-    ast: postAst,
-    meta: getYamlMetaData(postAst),
-  }));
-
-  const post = posts.find(({ meta }) => meta?.slug === slug);
-  return post;
+  for (const markdownString of getAllPostsRawString()) {
+    const ast = parseToAST(markdownString);
+    const meta = getYamlMetaData(ast);
+    if (meta?.slug === slug) {
+      return markdownString;
+    }
+  }
+  return null;
 }
 
 function getAllSlugs() {

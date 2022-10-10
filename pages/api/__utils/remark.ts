@@ -35,7 +35,6 @@ export function iterateTree(
  */
 export function getYamlMetaData(ast: Root): PostMetaData | null {
   let metaData: PostMetaData | null = null;
-  console.log('ITERATE');
   iterateTree(ast, (node) => {
     if (node.type !== 'yaml') return;
 
