@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-}
+  basePath: '/nextjs-ssg-md-blog',
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
