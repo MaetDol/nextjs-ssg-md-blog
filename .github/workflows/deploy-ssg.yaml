@@ -15,7 +15,7 @@ jobs:
           npm run ssg
 
       - name: Create .nojekyll file
-        run: touch ./out/./nojekyll
+        run: touch ./out/.nojekyll
 
       - name: Git config
         run: |
