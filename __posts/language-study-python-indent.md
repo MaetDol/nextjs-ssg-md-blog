@@ -1,15 +1,15 @@
 ---
 categories:
-	- language
-	- python3
+  - language
+  - python3
 date: '2022-10-10'
 description: 파이썬에서의 들여쓰기
 slug: language-study-python-indent
 tags:
-	- language
-	- python3
-	- syntax
-	- indent
+  - language
+  - python3
+  - syntax
+  - indent
 title: 파이썬 공부 - 들여쓰기
 ---
 
@@ -24,7 +24,6 @@ title: 파이썬 공부 - 들여쓰기
 다음에 실행코드를 입력합니다.
 
     	if 'ABC' in str: print('ABC in str variable')
-
 
 실행 문장이 여러줄일경우, 줄바꿈을 하게되는데, 반드시 들여쓰기를 해야합니다.
 if 'ABC' in str:
