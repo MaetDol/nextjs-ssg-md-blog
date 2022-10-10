@@ -1,4 +1,13 @@
 import { Content, Root } from 'mdast';
+import { remark } from 'remark';
+import remarkFrontmatter from 'remark-frontmatter';
+
+/**
+ * 문자열을 AST로 파싱합니다
+ */
+export function parseToAST(content: string) {
+  return remark().use(remarkFrontmatter).parse(content);
+}
 
 type ContentWithChildren = Content & { children?: Content[] };
 
