@@ -29,7 +29,21 @@ function getAllPosts() {
   return getAllPostsRawString().map(parseToAST);
 }
 
+/**
+ * slug 가 일치하는 포스트를 가져옵니다
+ */
+function getPost(slug: string) {
+  const posts = getAllPosts().map((postAst) => ({
+    ast: postAst,
+    meta: getYamlMetaData(postAst),
+  }));
+
+  const post = posts.find(({ meta }) => meta?.slug === slug);
+  return post;
+}
+
 const postService = {
   getAllPostMetaData,
+  getPost,
 };
 export default postService;
