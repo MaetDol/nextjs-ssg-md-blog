@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import config from '../config';
 import { PostMetaData } from '../models/posts.model';
+import postService from './api/__services/post.service';
 
 interface Props {
   postMetaDatas: PostMetaData[];
@@ -39,8 +39,7 @@ const PostList: NextPage<Props> = ({ postMetaDatas }) => {
 export default PostList;
 
 export async function getStaticProps() {
-  const res = await fetch(`${config.server_url}/api/posts`);
-  const postMetaDatas: PostMetaData[] = await res.json();
+  const postMetaDatas = postService.getAllPostMetaData();
 
   return {
     props: { postMetaDatas },

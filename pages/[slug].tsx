@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { remark } from 'remark';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkHtml from 'remark-html';
-import config from '../config';
+import postService from './api/__services/post.service';
 
 interface Props {
   markdownString: string;
@@ -30,9 +30,8 @@ const Post: NextPage<Props> = ({ markdownString }) => {
 export default Post;
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const slug = context.params?.slug;
-  const res = await fetch(`${config.server_url}/api/posts/${slug}`);
-  const markdownString = await res.text();
+  const slug = context.params?.slug?.toString() || '';
+  const markdownString = postService.getPost(slug);
 
   return {
     props: {
@@ -42,8 +41,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${config.server_url}/api/slugs`);
-  const slugs: string[] = await res.json();
+  const slugs = postService.getAllSlugs();
 
   return {
     paths: slugs.map((slug) => ({
