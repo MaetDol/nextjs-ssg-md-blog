@@ -1,4 +1,4 @@
-import { Content, Root } from 'mdast';
+import type { Content, Root } from 'mdast';
 import { remark } from 'remark';
 import remarkFrontmatter from 'remark-frontmatter';
 import YAML from 'yaml';

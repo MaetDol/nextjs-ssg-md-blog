@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from 'fs';
 import { PostMetaData } from '../../../models/posts.model';
-import { getYamlMetaData, parseToAST } from '../__utils/remark';
+import { getYamlMetaData, parseToAST } from '../__utils/remark.utils';
 
 const POST_DIRECTORY = '__posts';
 
