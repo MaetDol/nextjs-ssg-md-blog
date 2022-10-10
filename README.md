@@ -1,34 +1,10 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 원티드 프론트엔드 프리온보딩 챌린지 3차 - 2번째 과제
 
-## Getting Started
+nextjs 를 이용해 md를 파싱해서 보여주는 블로그를 SSG로 만들어 배포하는 과제입니다
 
-First, run the development server:
+github pages를 이용해 배포했어요 [링크](https://maetdol.github.io/nextjs-ssg-md-blog)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## 요구사항
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- \_\_posts 폴더에 md 파일을 넣어두면, / 로 접근했을때 목록을 보여준다
+- [id] 로 접근하면, 해당하는 md 파일을 HTML 로 렌더링해서 보여준다
