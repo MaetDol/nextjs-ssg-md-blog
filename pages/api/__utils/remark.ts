@@ -2,6 +2,7 @@ import { Content, Root } from 'mdast';
 import { remark } from 'remark';
 import remarkFrontmatter from 'remark-frontmatter';
 import YAML from 'yaml';
+import { PostMetaData } from '../../../models/posts.model';
 
 /**
  * 문자열을 AST로 파싱합니다
@@ -32,8 +33,8 @@ export function iterateTree(
 /**
  *  AST 에서 yaml 을 파싱해 가져옵니다
  */
-export function getYamlMetaData(ast: Root) {
-  let metaData = null;
+export function getYamlMetaData(ast: Root): PostMetaData | null {
+  let metaData: PostMetaData | null = null;
   console.log('ITERATE');
   iterateTree(ast, (node) => {
     if (node.type !== 'yaml') return;
