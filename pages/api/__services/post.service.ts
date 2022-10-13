@@ -9,6 +9,9 @@ const POST_DIRECTORY = "__posts";
 // 그 경우 아래와 같이 path.join 명령행을 추가해, 파일 위치를 알 수 있게 명시해주니 잘 복사되네요
 // https://github.com/vercel/next.js/discussions/32236#discussioncomment-3029649
 path.join(process.cwd(), POST_DIRECTORY);
+path.join(process.cwd(), POST_DIRECTORY, "also-another-slug-here.md");
+path.join(process.cwd(), POST_DIRECTORY, "language-study-c-label.md");
+path.join(process.cwd(), POST_DIRECTORY, "language-study-python-indent.md");
 
 /**
  *  모든 포스트의 메타데이터를 가져옵니다
