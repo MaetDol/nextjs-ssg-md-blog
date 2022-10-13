@@ -17,7 +17,7 @@ export function jsonRequest(url: string, option?: RequestOption) {
     .then((res) => res.json())
     .catch((e) => {
       console.error(e);
-      return null;
+      throw e;
     });
 }
 
@@ -25,7 +25,6 @@ export function textRequest(url: string, option?: RequestOption) {
   return request(url, option)
     .then((res) => res.text())
     .catch((e) => {
-      console.error(e);
-      return "";
+      throw e;
     });
 }
