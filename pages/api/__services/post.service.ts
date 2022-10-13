@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import { PostMetaData } from "../../../models/posts.model";
-import { readDirSyncAtLocal } from "../__utils/file.utils";
+import { readDirSyncAtLocal, readFileSyncAtLocal } from "../__utils/file.utils";
 import { getYamlMetaData, parseToAST } from "../__utils/remark.utils";
 
 const POST_DIRECTORY = "__posts";
@@ -20,7 +20,7 @@ function getAllPostMetaData(): PostMetaData[] {
 function getAllPostsRawString() {
   const filenames = readDirSyncAtLocal(POST_DIRECTORY);
   const files = filenames.map((name) =>
-    readFileSync(POST_DIRECTORY + `/${name}`).toString()
+    readFileSyncAtLocal(POST_DIRECTORY + `/${name}`).toString()
   );
 
   return files;
