@@ -1,9 +1,9 @@
-import { readdirSync, readFileSync } from "fs";
+import { readFileSync } from "fs";
 import { PostMetaData } from "../../../models/posts.model";
-import { isProduction } from "../../../utils/env";
+import { readDirSyncAtLocal } from "../__utils/file.utils";
 import { getYamlMetaData, parseToAST } from "../__utils/remark.utils";
 
-const POST_DIRECTORY = (isProduction() ? "/" : "public/") + "__posts";
+const POST_DIRECTORY = "__posts";
 
 /**
  *  모든 포스트의 메타데이터를 가져옵니다
@@ -18,7 +18,7 @@ function getAllPostMetaData(): PostMetaData[] {
  *  모든 포스트를 string 으로 읽어옵니다
  */
 function getAllPostsRawString() {
-  const filenames = readdirSync(POST_DIRECTORY);
+  const filenames = readDirSyncAtLocal(POST_DIRECTORY);
   const files = filenames.map((name) =>
     readFileSync(POST_DIRECTORY + `/${name}`).toString()
   );

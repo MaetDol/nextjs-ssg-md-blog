@@ -1,9 +1,11 @@
+import { getBasePath } from "../utils/env";
+
 interface RequestOption extends RequestInit {
   useExternal?: true;
 }
 
 function request(url: string, option: RequestOption = {}) {
-  const targetUrl = option.useExternal ? url : `/${process.env.basePath}${url}`;
+  const targetUrl = option.useExternal ? url : `${getBasePath()}${url}`;
 
   return fetch(targetUrl, option).then((res) => {
     if (res.ok) return res;
