@@ -16,6 +16,9 @@ const Post: NextPage = () => {
     getPostUrl(query.slug?.toString() || "_N/A"),
     textRequest
   );
+  console.log(markdownString);
+  console.log(error);
+  console.log(query.slug?.toString());
 
   const renderedPost = useMemo(() => {
     if (error) {
