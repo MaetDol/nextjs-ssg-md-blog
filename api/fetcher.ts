@@ -5,7 +5,11 @@ interface RequestOption extends RequestInit {
 function request(url: string, option: RequestOption = {}) {
   const targetUrl = option.useExternal ? url : `/${process.env.basePath}${url}`;
 
-  return fetch(targetUrl, option);
+  return fetch(targetUrl, option).then((res) => {
+    if (res.ok) return res;
+
+    throw res;
+  });
 }
 
 export function jsonRequest(url: string, option?: RequestOption) {
