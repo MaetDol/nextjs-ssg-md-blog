@@ -1,20 +1,34 @@
-import { GetStaticPropsContext, NextPage } from 'next';
-import Link from 'next/link';
-import { useMemo } from 'react';
-import { remark } from 'remark';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkHtml from 'remark-html';
-import postService from './api/__services/post.service';
+import { GetStaticProps, GetStaticPropsContext, NextPage } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useMemo } from "react";
+import { remark } from "remark";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkHtml from "remark-html";
+import useSWR from "swr";
+import { textRequest } from "../api/fetcher";
+import { FallbackProps, withSwrFallback } from "../components/swr-fallback.hoc";
+import postService from "./api/__services/post.service";
 
-interface Props {
-  markdownString: string;
-}
+const getPostUrl = (slug: string) => `/api/posts/${slug}`;
 
-const Post: NextPage<Props> = ({ markdownString }) => {
+const Post: NextPage = () => {
+  const { query } = useRouter();
+  const { data: markdownString, error } = useSWR<string>(
+    getPostUrl(query.slug?.toString() || "NAN"),
+    textRequest
+  );
+
   const renderedPost = useMemo(() => {
+    if (!markdownString) return "";
+    if (error) {
+      console.error(error);
+      return "";
+    }
+
     const ast = remark().use(remarkFrontmatter).parse(markdownString);
     return remark().use(remarkHtml).stringify(ast);
-  }, [markdownString]);
+  }, [markdownString, error]);
 
   return (
     <div>
@@ -27,18 +41,7 @@ const Post: NextPage<Props> = ({ markdownString }) => {
   );
 };
 
-export default Post;
-
-export async function getStaticProps(context: GetStaticPropsContext) {
-  const slug = context.params?.slug?.toString() || '';
-  const markdownString = postService.getPost(slug);
-
-  return {
-    props: {
-      markdownString,
-    },
-  };
-}
+export default withSwrFallback(Post);
 
 export async function getStaticPaths() {
   const slugs = postService.getAllSlugs();
@@ -50,3 +53,22 @@ export async function getStaticPaths() {
     fallback: false,
   };
 }
+
+type Fallback = {
+  [key: string]: string;
+};
+
+export const getStaticProps: GetStaticProps<FallbackProps<Fallback>> = async (
+  context: GetStaticPropsContext
+) => {
+  const slug = context.params?.slug?.toString() || "";
+  const markdownString = postService.getPost(slug) || "";
+
+  return {
+    props: {
+      fallback: {
+        [getPostUrl(slug)]: markdownString,
+      },
+    },
+  };
+};
