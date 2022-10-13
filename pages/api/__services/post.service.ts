@@ -8,15 +8,22 @@ const POST_DIRECTORY = "__posts";
 // 로컬 파일이 복사되지 않고 누락되는 케이스가 있습니다
 // 그 경우 아래와 같이 path.join 명령행을 추가해, 파일 위치를 알 수 있게 명시해주니 잘 복사되네요
 // https://github.com/vercel/next.js/discussions/32236#discussioncomment-3029649
-path.join(process.cwd(), POST_DIRECTORY);
-path.join(process.cwd(), POST_DIRECTORY, "also-another-slug-here.md");
-path.join(process.cwd(), POST_DIRECTORY, "language-study-c-label.md");
-path.join(process.cwd(), POST_DIRECTORY, "language-study-python-indent.md");
+console.log(path.join(process.cwd(), POST_DIRECTORY));
+console.log(
+  path.join(process.cwd(), POST_DIRECTORY, "also-another-slug-here.md")
+);
+console.log(
+  path.join(process.cwd(), POST_DIRECTORY, "language-study-c-label.md")
+);
+console.log(
+  path.join(process.cwd(), POST_DIRECTORY, "language-study-python-indent.md")
+);
 
 /**
  *  모든 포스트의 메타데이터를 가져옵니다
  */
 function getAllPostMetaData(): PostMetaData[] {
+  console.log("Get all post meta data");
   return getAllPosts()
     .map(getYamlMetaData)
     .filter((meta): meta is PostMetaData => meta !== null);
@@ -26,7 +33,9 @@ function getAllPostMetaData(): PostMetaData[] {
  *  모든 포스트를 string 으로 읽어옵니다
  */
 function getAllPostsRawString() {
+  console.log(`Reading All post by raw string`);
   const filenames = readDirSyncAtLocal(POST_DIRECTORY);
+  console.log(filenames);
   const files = filenames.map((name) =>
     readFileSyncAtLocal(POST_DIRECTORY + `/${name}`).toString()
   );
@@ -45,6 +54,7 @@ function getAllPosts() {
  * slug 가 일치하는 포스트를 마크다운 문자열로 가져옵니다
  */
 function getPost(slug: string) {
+  console.log(`Get specific post ${slug}`);
   for (const markdownString of getAllPostsRawString()) {
     const ast = parseToAST(markdownString);
     const meta = getYamlMetaData(ast);
@@ -57,6 +67,8 @@ function getPost(slug: string) {
 
 function getAllSlugs() {
   const postMetaDatas = getAllPostMetaData();
+  console.log("Get all slugs");
+  console.log(postMetaDatas.map((m) => m.slug));
   return postMetaDatas.map((meta) => meta.slug);
 }
 
