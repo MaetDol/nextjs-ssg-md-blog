@@ -1,0 +1,1 @@
+{"pageProps":{"fallback":{"/api/posts/spf13-vim-3-0-release-and-new-website":"---\ncategories:\n  - Development\n  - VIM\ndate: '2012-04-06'\ndescription: 설명을 적는 곳입니다\nslug: spf13-vim-3-0-release-and-new-website\ntags:\n  - .vimrc\n  - plugins\n  - spf13-vim\n  - vim\ntitle: hello\n---\n\n## 예시입니다\n\n- 예시입니다\n"}},"__N_SSG":true}
