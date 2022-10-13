@@ -13,12 +13,12 @@ const getPostUrl = (slug: string) => `/api/posts/${slug}`;
 const Post: NextPage = () => {
   const { query } = useRouter();
   const { data: markdownString = "", error } = useSWR<string>(
-    getPostUrl(query.slug?.toString() || "_N/A"),
+    getPostUrl(query.postSlug?.toString() || "_N/A"),
     textRequest
   );
   console.log(markdownString);
   console.log(error);
-  console.log(query.slug?.toString());
+  console.log(query.postSlug?.toString());
 
   const renderedPost = useMemo(() => {
     if (error) {
@@ -46,8 +46,8 @@ export async function getStaticPaths() {
   const slugs = postService.getAllSlugs();
 
   return {
-    paths: slugs.map((slug) => ({
-      params: { slug },
+    paths: slugs.map((postSlug) => ({
+      params: { postSlug },
     })),
     fallback: false,
   };
