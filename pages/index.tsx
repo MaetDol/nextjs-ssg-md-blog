@@ -1,17 +1,26 @@
-import type { NextPage } from 'next';
-import Link from 'next/link';
-import { PostMetaData } from '../models/posts.model';
-import postService from './api/__services/post.service';
+import type { GetStaticProps, NextPage } from "next";
+import Link from "next/link";
+import useSWR, { SWRConfig } from "swr";
+import { jsonRequest } from "../api/fetcher";
+import { FallbackProps, withSwrFallback } from "../components/swr-fallback.hoc";
+import { PostMetaData } from "../models/posts.model";
+import postService from "./api/__services/post.service";
 
-interface Props {
-  postMetaDatas: PostMetaData[];
-}
+const GET_ALL_POST = `/api/posts`;
 
-const PostList: NextPage<Props> = ({ postMetaDatas }) => {
+const PostList: NextPage = () => {
+  const { data, error } = useSWR<PostMetaData[]>(GET_ALL_POST, jsonRequest);
+
+  if (!data) return <div>로딩중입니다..</div>;
+  if (error) {
+    console.error(error);
+    return <div>목록 요청 도중 에러가 발생했어요</div>;
+  }
+
   return (
     <div>
-      {postMetaDatas.map((meta) => (
-        <Link href={'/' + meta.slug} key={meta.slug}>
+      {data.map((meta) => (
+        <Link href={"/" + meta.slug} key={meta.slug}>
           <a className="link-block">
             <div key={meta.slug}>
               {([] as string[]).concat(meta.categories).map((category) => (
@@ -24,7 +33,7 @@ const PostList: NextPage<Props> = ({ postMetaDatas }) => {
               <p>{meta.description}</p>
               {([] as string[]).concat(meta.tags).map((tag) => (
                 <span className="tag" key={tag}>
-                  #{tag}{' '}
+                  #{tag}{" "}
                 </span>
               ))}
               <hr />
@@ -36,12 +45,22 @@ const PostList: NextPage<Props> = ({ postMetaDatas }) => {
   );
 };
 
-export default PostList;
+export default withSwrFallback(PostList);
 
-export async function getStaticProps() {
+type Fallback = {
+  [GET_ALL_POST]: PostMetaData[];
+};
+
+export const getStaticProps: GetStaticProps<
+  FallbackProps<Fallback>
+> = async () => {
   const postMetaDatas = postService.getAllPostMetaData();
 
   return {
-    props: { postMetaDatas },
+    props: {
+      fallback: {
+        [GET_ALL_POST]: postMetaDatas,
+      },
+    },
   };
-}
+};
