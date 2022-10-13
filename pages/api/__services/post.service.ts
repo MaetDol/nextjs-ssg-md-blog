@@ -1,8 +1,9 @@
-import { readdirSync, readFileSync } from 'fs';
-import { PostMetaData } from '../../../models/posts.model';
-import { getYamlMetaData, parseToAST } from '../__utils/remark.utils';
+import { readdirSync, readFileSync } from "fs";
+import { PostMetaData } from "../../../models/posts.model";
+import { isProduction } from "../../../utils/env";
+import { getYamlMetaData, parseToAST } from "../__utils/remark.utils";
 
-const POST_DIRECTORY = '__posts';
+const POST_DIRECTORY = (isProduction() ? "/" : "public/") + "__posts";
 
 /**
  *  모든 포스트의 메타데이터를 가져옵니다
