@@ -8,26 +8,25 @@ import remarkHtml from "remark-html";
 import useSWR from "swr";
 import { textRequest } from "../api/fetcher";
 import { FallbackProps, withSwrFallback } from "../components/swr-fallback.hoc";
+import { parseMarkdown } from "../utils/remark";
 import postService from "./api/__services/post.service";
 
 const getPostUrl = (slug: string) => `/api/posts/${slug}`;
 
 const Post: NextPage = () => {
   const { query } = useRouter();
-  const { data: markdownString, error } = useSWR<string>(
-    getPostUrl(query.slug?.toString() || "NAN"),
+  const { data: markdownString = "", error } = useSWR<string>(
+    getPostUrl(query.slug?.toString() || "_N/A"),
     textRequest
   );
 
   const renderedPost = useMemo(() => {
-    if (!markdownString) return "";
     if (error) {
       console.error(error);
       return "";
     }
 
-    const ast = remark().use(remarkFrontmatter).parse(markdownString);
-    return remark().use(remarkHtml).stringify(ast);
+    return parseMarkdown(markdownString);
   }, [markdownString, error]);
 
   return (
