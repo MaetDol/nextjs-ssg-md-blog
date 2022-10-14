@@ -1,7 +1,7 @@
 import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import useSWR from "swr";
-import { jsonRequest } from "../api/fetcher";
+import { jsonRequest } from "../custom-apis/fetcher";
 import { FallbackProps, withSwrFallback } from "../components/swr-fallback.hoc";
 import { PostMetaData } from "../models/posts.model";
 import postService from "./api/__services/post.service";

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import useSWR from "swr";
-import { textRequest } from "../api/fetcher";
+import { textRequest } from "../custom-apis/fetcher";
 import { FallbackProps, withSwrFallback } from "../components/swr-fallback.hoc";
 import { parseMarkdown } from "../utils/remark";
 import postService from "./api/__services/post.service";
